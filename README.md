@@ -17,3 +17,17 @@ npm ci
 ```shell
 npx playwright test
 ```
+
+Какие ошибки были найдены
+-------------------------
+
+В widget.page.ts:
+1. Селектор кнопки write to us находил все кнопки на странице и был исправлен на data-test=button_feedback_form. Playwright также падал из-за strict mode;
+2. getPopularArticles возвращал пустой массив через all(), сейчас же используется Locator, который асинхронно ждет появления элементов в DOM;
+3. getTitle возвращается textContent(), хотя текст мог поменяться уже после проверки. Здесь также как и в getPopularArticles используется Locator.
+
+В widget.spec.ts
+1. Клик идет по первой кнопке _UCHI_COOKIE__button;
+2. В тест 'opens' добавлена проверка, что до клика виджет скрыт;
+3. В тесте 'has correct title' теперь берется первое подходящее значение через first();
+4. Вместо проверки текста заголовка через toEqual, текст проверяется через toHaveText.
