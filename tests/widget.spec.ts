@@ -22,6 +22,14 @@ test.describe('Uchi.ru widget ', () => {
     await expect(widgetPage.getWidgetBody()).toBeVisible();
   });
 
+  test('closes', async () => {
+    await widgetPage.openWidget();
+    await expect(widgetPage.getWidgetBody()).toBeVisible();
+
+    await widgetPage.closeWidget();
+    await expect(widgetPage.getWidgetBody()).toBeHidden();
+  });
+
   test('has correct title', async () => {
     await widgetPage.openWidget();
 
